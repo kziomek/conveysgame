@@ -14,10 +14,11 @@ public class Game {
                 int livingNeighbours = livingNeighbours(colony, row, col);
                 if (livingNeighbours == 0) {
                     newColony[row][col] = false;
-                } else if (livingNeighbours == 2 || livingNeighbours == 3) {
+                } else if (livingNeighbours == 2) {
                     newColony[row][col] = colony[row][col];
+                } else if (livingNeighbours == 3) {
+                    newColony[row][col] = true;
                 }
-
             }
         }
         return newColony;
@@ -30,57 +31,23 @@ public class Game {
         int rowLength = colony.length;
         int colLength = colony[0].length;
 
-        //top-left
-        if (row - 1 >= 0 && col - 1 >= 0){
-            if (colony[row - 1][col - 1]){
-                count++;
+        for (int i = row - 1; i <= row + 1; i++) {
+            if (i < 0 || i >= rowLength) {
+                continue;
             }
-        }
-        //top
-        if (row - 1 >= 0){
-            if (colony[row-1][col]){
-                count++;
-            }
-        }
-        //top-rigth
-        if (row - 1 >= 0 && col + 1 < colLength ){
-            if (colony[row - 1][col + 1]){
-                count++;
-            }
-        }
-        //right
-        if ( col + 1 < colLength ){
-            if (colony[row][col + 1]){
-                count++;
-            }
-        }
-        //right-bottom
-        if (row + 1 < rowLength && col + 1 < colLength ){
-            if (colony[row + 1][col + 1]){
-                count++;
-            }
-        }
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (j < 0 || j >= colLength) {
+                    continue;
+                }
+                if (i == row && j == col) {
+                    continue; // self ignore
+                }
+                if (colony[i][j]) {
+                    count++;
+                }
 
-        //bottom
-        if (row + 1 < rowLength){
-            if (colony[row+1][col]){
-                count++;
             }
         }
-        //bottom-leff
-        if (row + 1 < rowLength && col -1 >= 0){
-            if (colony[row+1][col-1]){
-                count++;
-            }
-        }
-
-        //left
-        if ( col - 1 >=0 ){
-            if (colony[row][col - 1]){
-                count++;
-            }
-        }
-
         return count;
     }
 
